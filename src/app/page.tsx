@@ -1,12 +1,28 @@
 'use client';
+import { loadAuthState } from "@/lib/redux/features/auth-slice";
 import { RootState } from "@/lib/redux/store";
 import Image from "next/image";
 import Link from "next/link";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Home() {
+  const dispatch = useDispatch();
+  const [isClient, setIsClient] = useState(false);
   const auth = useSelector((state: RootState) => state.auth);
 
+  useEffect(() => {
+    setIsClient(true);
+    const savedAuthState = loadAuthState();
+    if (savedAuthState) {
+      dispatch({ type: 'auth/loadState', payload: savedAuthState });
+    }
+  }, [dispatch]);
+
+  if (!isClient) {
+    return null; // Render nothing on the server
+  }
+  
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-white">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-center">

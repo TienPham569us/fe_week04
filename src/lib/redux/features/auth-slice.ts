@@ -22,9 +22,18 @@ type AuthState = {
 //     }
 // }
 
-const setAuthToken = (token: string, name: string) => {
+export const setAuthToken = (token: string, name: string) => {
     const toBase64 = Buffer.from(token).toString('base64');
     localStorage.setItem(name, toBase64);
+}
+
+export const saveAuthState = (state: AuthState) => {
+    localStorage.setItem('authState', JSON.stringify(state));
+}
+
+export const loadAuthState = (): AuthState => {
+    const state = localStorage.getItem('authState');
+    return state ? JSON.parse(state) : initialState;
 }
 
 export type LoginResponse = {
@@ -53,6 +62,7 @@ export const auth = createSlice({
     reducers: {
         logout: (state) => {
             localStorage.removeItem("auth_token");
+            localStorage.removeItem("authState");
             return initialState;
         }
     },
@@ -62,20 +72,14 @@ export const auth = createSlice({
                 authApi.endpoints.login.matchFulfilled,
                 (state, { payload }) => {
                     console.log('payload: ', payload);
-                    if (payload.data.access_token) {
-                        setAuthToken(payload.data.access_token ?? "", "auth_token");
-                        state.isAuth = true;
-                        state.access_token = payload.data.access_token ?? "";
-                    }
-                    if (payload.data.username) {
-                        state.username = payload.data.username;
-                    }
-                    if (payload.data.email) {
-                        state.email = payload.data.email;
-                    }
-                    if (payload.data.uid) {
-                        state.uid = payload.data.uid;
-                    }
+                    setAuthToken(payload.data.access_token ?? "", "auth_token");
+                    state.isAuth = true;
+                    state.access_token = payload.data.access_token ?? "";
+                    state.username = payload.data.username ?? "";
+                    state.email = payload.data.email ?? "";
+                    state.uid = payload.data.uid ?? "";
+                    saveAuthState(state);
+                    return state;
                     // if (payload.data && payload.data.message) {
                     //     state.isAuth = false;
                     // }
@@ -88,6 +92,7 @@ export const auth = createSlice({
                     state.email = payload.data.email;
                     state.username = payload.data.username;
                     state.uid = payload.data.id;
+                    saveAuthState(state);
                     //return { ...state, ...payload };
                 }
             )
