@@ -10,8 +10,8 @@ import { useLoginMutation, useRegisterMutation } from "@/lib/redux/features/auth
 import { useRouter, useSearchParams } from "next/navigation";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-export default function LoginPage() {
+import { Suspense } from 'react'
+ function LoginPageContent() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -102,7 +102,7 @@ export default function LoginPage() {
    
   } 
 
-  return (<>
+  return ( <>
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-white">
       <div>
         <Link href={'/'} className="return-btn ">
@@ -189,3 +189,10 @@ export default function LoginPage() {
 }
 
 
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <LoginPageContent />
+    </Suspense>
+  );
+}
