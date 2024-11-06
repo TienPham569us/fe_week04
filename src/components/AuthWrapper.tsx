@@ -36,7 +36,7 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
           
           dispatch(logout());
         }
-    }, [token, router, dispatch]);
+    }, [token, router, dispatch]);// 
     
     // if (isLoading) {
     //     return <div>Loading...</div>;

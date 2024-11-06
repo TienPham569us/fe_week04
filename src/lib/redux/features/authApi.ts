@@ -5,7 +5,7 @@ import { ProfileResponse } from '@/types/profile.response';
 export const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: fetchBaseQuery({ 
-    baseUrl: 'https://be-week04-tienpham569us-projects.vercel.app', //'http://localhost:3001',//
+    baseUrl: 'https://be-week04-tienpham569us-projects.vercel.app', //'http://localhost:3001',//'http://localhost:3001',//
     prepareHeaders: (headers, { getState }) => {
       // Add any custom headers here if needed
       return headers;

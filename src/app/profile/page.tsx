@@ -14,13 +14,14 @@ export default function ProfilePage() {
   const [error, setError] = useState("");
   
   const [isClient, setIsClient] = useState(false);
-   const router = useRouter();
+  const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
 
   const profileData = useSelector((state: RootState) => state.auth);
 
   const handleLogout = () => {
-    router.push('/login');
+    window.location.href = '/login';
+    //router.push('/');
     dispatch(logout());
     
   };

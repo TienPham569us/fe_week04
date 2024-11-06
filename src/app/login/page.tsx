@@ -28,6 +28,7 @@ import { Suspense } from 'react'
 
   useEffect(() => {
     const notificationCode = searchParams.get('notificationCode');
+    
     if (notificationCode && notificationCode === '403') {
       toast.error('Unauthorized access. Please login to continue.', {
         position: "top-right",
