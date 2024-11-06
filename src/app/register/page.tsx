@@ -4,6 +4,9 @@ import { ApiManager } from "@/api_manager/ApiManager";
 import Link from "next/link";
 import { FormEvent, useState, FocusEvent, useActionState, CSSProperties } from "react";
 import validator from "validator";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import CustomHeader from "@/components/header";
 
 export default function RegisterPage() {
   const [email, setEmail] = useState("");
@@ -28,8 +31,6 @@ export default function RegisterPage() {
       setInvalidEmail("");
     }
   }
-
-  
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -84,12 +85,10 @@ export default function RegisterPage() {
     
   } 
 
-  return (
+  return (<div>
+    <CustomHeader/>
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-white">
-      <Link href={'/'} className="return-btn ">
-        <h1>Go back to Home Page</h1>
-      </Link>
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-center">
+      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-center p-5 border border-black border-solid rounded">
         <div className="flex flex-row text-black">
           <h1 className="text-[#22d3ee]">Register Page</h1>
         </div>
@@ -170,6 +169,7 @@ export default function RegisterPage() {
         </div>
         
       </main>
+    </div>
     </div>
   );
 }

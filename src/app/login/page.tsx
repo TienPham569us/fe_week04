@@ -1,16 +1,15 @@
 'use client';
-//import Image from "next/image";
+
 import Link from "next/link";
 import { FormEvent, useState, FocusEvent, useEffect } from "react";
 import validator from "validator";
-//import { login, logOut } from "@/lib/redux/features/auth-slice";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/lib/redux/store";
-import { useLoginMutation, useRegisterMutation } from "@/lib/redux/features/authApi";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useLoginMutation } from "@/lib/redux/features/authApi";
+import { useSearchParams } from "next/navigation";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Suspense } from 'react'
+import CustomHeader from "@/components/header";
+
  function LoginPageContent() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,12 +18,10 @@ import { Suspense } from 'react'
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-  const dispatch = useDispatch();
   const [login] = useLoginMutation();
-  //const accessToken = useSelector((state: RootState) => state.auth.access_token);
-  const router = useRouter();
   const searchParams = useSearchParams();
-  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+  ///const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
   useEffect(() => {
     const notificationCode = searchParams.get('notificationCode');
@@ -104,14 +101,10 @@ import { Suspense } from 'react'
   } 
 
   return ( <>
+  <CustomHeader />
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-white">
-      <div>
-        <Link href={'/'} className="return-btn ">
-          Go back to Home Page
-        </Link>
-      </div>
         
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-center">
+      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-center p-5 border border-black border-solid rounded">
       <div><ToastContainer /></div>
         <div className="flex flex-row text-black">
           <h1 className="text-[#22d3ee]">Login Page</h1>
@@ -185,7 +178,8 @@ import { Suspense } from 'react'
         </div>
         
       </main>
-    </div></>
+    </div>
+    </>
   );
 }
 
